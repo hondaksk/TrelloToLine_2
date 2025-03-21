@@ -20,10 +20,10 @@ const sendQueue = Queue(async (task, callback) => {
       headers: { 'Authorization': `Bearer ${LINE_TOKEN}`, 'Content-Type': 'application/json' }
     });
     console.log(`アカウント_${userKey}にメッセージを送信しました`);
-    callback();
+    callback(); // 成功時のみここで終了
   } catch (error) {
-    console.error(`アカウント_${userKey}への送信失敗: ${error.message}`);
-    callback(error);
+    console.error(`アカウント_${userKey}への送信失敗: ${error.message}, Status: ${error.response?.status}`);
+    callback(error); // 失敗時のみここで終了
   }
 }, 1);
 
