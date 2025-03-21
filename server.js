@@ -12,19 +12,21 @@ const USERS = {
 
 const LINE_URL = 'https://api.line.me/v2/bot/message/push';
 
-const sendQueue = Queue(async (task, callback) => {
+const sendQueue = Queue((task, callback) => {
   const { userKey, message } = task;
   const { LINE_TOKEN, USER_ID } = USERS[userKey];
-  try {
-    await axios.post(LINE_URL, { to: USER_ID, messages: [{ type: 'text', text: message }] }, {
-      headers: { 'Authorization': `Bearer ${LINE_TOKEN}`, 'Content-Type': 'application/json' }
+  
+  axios.post(LINE_URL, { to: USER_ID, messages: [{ type: 'text', text: message }] }, {
+    headers: { 'Authorization': `Bearer ${LINE_TOKEN}`, 'Content-Type': 'application/json' }
+  })
+    .then(() => {
+      console.log(`アカウント_${userKey}にメッセージを送信しました`);
+      callback(); // 成功時
+    })
+    .catch(error => {
+      console.error(`アカウント_${userKey}への送信失敗: ${error.message}, Status: ${error.response?.status}`);
+      callback(error); // 失敗時
     });
-    console.log(`アカウント_${userKey}にメッセージを送信しました`);
-    callback(); // 成功時のみここで終了
-  } catch (error) {
-    console.error(`アカウント_${userKey}への送信失敗: ${error.message}, Status: ${error.response?.status}`);
-    callback(error); // 失敗時のみここで終了
-  }
 }, 1);
 
 app.post('/', async (req, res) => {
