@@ -74,4 +74,5 @@ app.get('/check', (req, res) => {
   res.json(status);
 });
 
-app.listen(process.env.PORT || 3000, () => console.log('サーバーが起動しました'));
+app.listen(process.env.PORT || 3000, '0.0.0.0', () => console.log('サーバーが起動しました'));
+
