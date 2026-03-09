@@ -62,7 +62,7 @@ app.post('/', (req, res) => {
 });
 
 // ヘルスチェック
-app.get('/', (req, res) => res.send('Server is alive!'));
+app.get('/', (req, res) => res.send('Server is alive!!'));
 
 // 稼働確認用エンドポイント
 app.get('/check', (req, res) => {
@@ -75,4 +75,5 @@ app.get('/check', (req, res) => {
 });
 
 app.listen(process.env.PORT || 3000, '0.0.0.0', () => console.log('サーバーが起動しました'));
+
 
