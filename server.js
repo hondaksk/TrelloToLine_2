@@ -30,6 +30,7 @@ const sendQueue = Queue((task, callback) => {
 }, 1);
 
 // Webhook受信
+app.head('/', (req, res) => res.sendStatus(200));
 app.post('/', (req, res) => {
   const action = req.body.action;
   console.log('Webhook受信:', { type: action?.type, boardId: req.body.model?.id });
@@ -62,7 +63,7 @@ app.post('/', (req, res) => {
 });
 
 // ヘルスチェック
-app.get('/', (req, res) => res.send('Server is alive!!!'));
+app.get('/', (req, res) => res.send('Server is alive!!!!'));
 
 // 稼働確認用エンドポイント
 app.get('/check', (req, res) => {
@@ -78,6 +79,7 @@ const port = process.env.PORT || 3000;
 app.listen(port, '0.0.0.0', () => {
   console.log(`Server running on port ${port}`);
 });
+
 
 
 
